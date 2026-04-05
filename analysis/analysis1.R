@@ -20,14 +20,14 @@ ggplot(NHANES, aes(sample=Poverty))+
   geom_qq_line() + 
   facet_grid(~HealthGen)
 
-modelo = aov(Poverty ~ HealthGen, data=NHANES)
-res = residuals(modelo)
+modelo1 = aov(Poverty ~ HealthGen, data=NHANES)
+res1 = residuals(modelo1)
 
-shapiro.test(res)
+#shapiro.test(res1)
 
 '| O teste de Shapiro para normalidade dos resíduos não pode ser feito pois n >> 5000.'
 
-hist(res)
+hist(res1)
 
 '| O histograma mostra claramente uma distribuição não normal.'
 
