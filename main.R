@@ -9,6 +9,8 @@
 if(!require(NHANES)) install.packages("NHANES")
 library(NHANES)
 
+data(NHANES)
+
 ## Base de dados NHANES (2020)
 if(!require(haven)) install.packages("haven")
 library(haven)
@@ -20,7 +22,7 @@ arquivos = list.files(path = "databases",
 
 lista_dados = lapply(arquivos, read_xpt)
 
-database = Reduce(function(x, y) {
+NHANES_20 = Reduce(function(x, y) {
   full_join(x, y, by = "SEQN")
   }, lista_dados)
 
