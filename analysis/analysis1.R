@@ -1,7 +1,7 @@
-# __________________________________
+# ________________________________________
 # ANÁLISE TESTE 1
-# Saúde Geral x Índice de Pobreza
-# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+# Saúde Geral x Índice de Pobreza (2012)
+# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 # Plotagem e análise preliminar -----
 library(ggplot2)
