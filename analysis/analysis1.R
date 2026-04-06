@@ -11,8 +11,8 @@ ggplot(NHANES, aes(HealthGen, Poverty, fill=HealthGen)) +
   scale_fill_brewer(palette="PuOr") +
   stat_summary(fun = mean, geom = "line", aes(group = 1), color = "darkgreen")
 
-'| Existe um padrão, geralmente pessoas com melhor saúde aparentam ter um menor nível de pobreza.
- | Vamos verificar se isto é estatisticamente real.'
+'| Existe um padrão, geralmente pessoas com melhor saúde aparentam ter um menor nível de pobreza.'
+'| Vamos verificar se isto é estatisticamente real.'
 
 # Análise de variâncias -----
 ggplot(NHANES, aes(sample=Poverty))+
