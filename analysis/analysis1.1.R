@@ -7,7 +7,7 @@
 # HealthGen: "HUQ010"
 
 # Filtragem -----
-NHANES_20_t1 = subset(NHANES_20, INDFMMPI<=5 & HUQ010 <=5)
+NHANES_20_t1 = subset(NHANES_20, INDFMMPI<=5 & HUQ010<=5)
 
 '| São desprezados os dados que de indivíduos que não sabem/não responderam (scores 7 e 9).'
 
