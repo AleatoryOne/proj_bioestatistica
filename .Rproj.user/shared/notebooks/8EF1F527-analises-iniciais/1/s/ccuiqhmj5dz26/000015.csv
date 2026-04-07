@@ -1,0 +1,7 @@
+"0","modelo3a.1 = aov(INDFMMPI ~ as.factor(DPQ020), data=NHANES_20_t4)"
+"0","res3a.1 = residuals(modelo3a.1)"
+"0",""
+"0","modelo3b.1 = aov(INDFMMPI ~ as.factor(DPQ010), data=NHANES_20_t4)"
+"0","res3b.1 = residuals(modelo3b.1)"
+"0",""
+"0","hist(res3a.1)"

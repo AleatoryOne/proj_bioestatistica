@@ -1,0 +1,6 @@
+"0",""
+"0","ggplot(NHANES, aes(BMI_WHO, Poverty, fill=BMI_WHO)) + "
+"0","  geom_boxplot() +"
+"0","  theme_gray() +"
+"0","  scale_fill_brewer(palette = ""PuOr"") +"
+"0","  stat_summary(fun = mean, geom = ""line"", aes(group = 1), color = ""darkgreen"")"

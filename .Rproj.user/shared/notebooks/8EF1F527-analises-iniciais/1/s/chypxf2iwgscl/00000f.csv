@@ -1,0 +1,5 @@
+"0","library(ggplot2)"
+"0","ggplot(NHANES, aes(BMI, Poverty, color = BMI_WHO)) + "
+"0","  geom_point() +"
+"0","  theme_gray() +"
+"0","  scale_color_brewer(type = ""div"", palette = ""PuOr"")"

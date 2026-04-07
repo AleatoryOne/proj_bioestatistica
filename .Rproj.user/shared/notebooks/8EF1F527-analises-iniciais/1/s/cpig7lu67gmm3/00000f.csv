@@ -1,0 +1,4 @@
+"0","ggplot(NHANES, aes(sample=Poverty)) +"
+"0","  geom_qq() +"
+"0","  geom_qq_line() + "
+"0","  facet_grid(~HealthGen)"

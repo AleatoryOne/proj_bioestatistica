@@ -1,0 +1,4 @@
+"0","ggplot(NHANES_20_t4, aes(sample=INDFMMPI))+"
+"0","  geom_qq() +"
+"0","  geom_qq_line() + "
+"0","  facet_grid(~as.factor(DPQ020))"

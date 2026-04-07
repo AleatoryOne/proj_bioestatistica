@@ -1,0 +1,8 @@
+"0",""
+"0","## Perda de interesse"
+"0","ggplot(NHANES_20_t4, aes(as.factor(DPQ010), INDFMMPI, fill=as.factor(DPQ010))) + "
+"0","  geom_boxplot() +"
+"0","  theme_gray() +"
+"0","  scale_fill_brewer(palette=""BrBG"") +"
+"0","  stat_summary(fun = mean, geom = ""line"", aes(group = 1), color = ""purple"") +"
+"0","  labs(x=""Level of lack of interest in doing things (0 = not at all / 3 = often)"")"

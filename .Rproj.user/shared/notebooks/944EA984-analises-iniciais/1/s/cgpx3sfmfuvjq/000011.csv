@@ -1,0 +1,7 @@
+"0","library(ggplot2)"
+"0","ggplot(NHANES, aes(HealthGen, Poverty, fill=HealthGen)) + "
+"0","  geom_boxplot() +"
+"0","  theme_gray() +"
+"0","  scale_fill_brewer(palette=""PuOr"") +"
+"0","  stat_summary(fun = mean, geom = ""line"", aes(group = 1), color = ""darkgreen"") +"
+"0","  ylab(""Poverty\n(0 - poorer / 5 - richer)"")"

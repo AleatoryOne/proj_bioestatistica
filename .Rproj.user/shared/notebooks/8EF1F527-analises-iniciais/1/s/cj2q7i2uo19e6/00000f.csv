@@ -1,0 +1,6 @@
+"0","library(ggplot2)"
+"0","ggplot(NHANES, aes(Depressed, Poverty, fill=Depressed)) + "
+"0","  geom_boxplot() +"
+"0","  theme_gray() +"
+"0","  scale_fill_brewer(palette=""BrBG"") +"
+"0","  stat_summary(fun = mean, geom = ""line"", aes(group = 1), color = ""darkred"")"

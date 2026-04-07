@@ -1,0 +1,1 @@
+"0","NHANES_20_t4 = subset(NHANES_20, INDFMMPI<=5 & DPQ020<=5 & DPQ010<=5)"

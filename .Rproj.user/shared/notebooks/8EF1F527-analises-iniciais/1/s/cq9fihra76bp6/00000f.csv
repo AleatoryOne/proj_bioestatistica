@@ -1,0 +1,8 @@
+"0","modelo3a = aov(Poverty ~ Depressed, data=NHANES)"
+"0","res3a = residuals(modelo3a)"
+"0",""
+"0","modelo3b = aov(Poverty ~ LittleInterest, data=NHANES)"
+"0","res3b = residuals(modelo3b)"
+"0",""
+"0","par(mfrow=c(1,2))"
+"0","hist(res3a) #Depressão"

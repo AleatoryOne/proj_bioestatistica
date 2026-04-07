@@ -1,0 +1,4 @@
+"0","modelo1 = aov(Poverty ~ HealthGen, data=NHANES)"
+"0","res1 = residuals(modelo1)"
+"0",""
+"0","hist(res1)"
