@@ -1,7 +1,0 @@
-"0","library(ggplot2)"
-"0","ggplot(NHANES_20_t1, aes(as.factor(HUQ010), INDFMMPI, fill=as.factor(HUQ010))) + "
-"0","  geom_boxplot() +"
-"0","  theme_gray() +"
-"0","  scale_fill_brewer(palette=""PuOr"") +"
-"0","  stat_summary(fun = mean, geom = ""line"", aes(group = 1), color = ""darkgreen"") +"
-"0","  labs(x=""Perceived health level (1 = better / 5 = worse)"")"

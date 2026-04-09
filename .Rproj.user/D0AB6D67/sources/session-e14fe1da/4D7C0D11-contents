@@ -1,12 +1,12 @@
 # ________________________________________
 # ANÁLISE TESTE 1.2
-# Saúde Geral x Índice de Pobreza (2012-23)
+# Saúde Geral x Índice de Pobreza (2012-20)
 # ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 # Quais idades possuem maior índice de pobreza (2012)? -----
 
 library(ggplot2)
-ggplot(NHANES_12, aes(AgeDecade, Poverty, fill=HealthGen)) + 
+ggplot(NHANES, aes(AgeDecade, Poverty, fill=HealthGen)) + 
   geom_boxplot() +
   theme_gray() +
   scale_fill_brewer(palette="Spectral") +
@@ -18,7 +18,7 @@ ggplot(NHANES_12, aes(AgeDecade, Poverty, fill=HealthGen)) +
 # Quais gêneros possuem maior índice de pobreza (2012)? -----
 
 library(ggplot2)
-ggplot(NHANES_12, aes(HealthGen, Poverty, fill=Gender)) + 
+ggplot(NHANES, aes(HealthGen, Poverty, fill=Gender)) + 
   geom_boxplot() +
   theme_gray() +
   scale_fill_brewer(palette="Set1") +
@@ -26,7 +26,7 @@ ggplot(NHANES_12, aes(HealthGen, Poverty, fill=Gender)) +
 
 # Quais etnias possuem maior índice de pobreza (2012)? -----
 
-ggplot(NHANES_12, aes(HealthGen, Poverty, fill=Race1)) + 
+ggplot(NHANES, aes(HealthGen, Poverty, fill=Race1)) + 
   geom_boxplot() +
   theme_gray() +
   scale_fill_brewer(palette="Spectral") +
@@ -34,15 +34,15 @@ ggplot(NHANES_12, aes(HealthGen, Poverty, fill=Race1)) +
 
 '| Podemos analisar com maior profundidade a relação etnia-pobreza e etnia-saúde.'
 
-plot(NHANES_12$Race1, NHANES_12$HealthGen)
+plot(NHANES$Race1, NHANES$HealthGen)
 
-ggplot(NHANES_12, aes(Gender, Poverty, fill=Gender)) + 
+ggplot(NHANES, aes(Gender, Poverty, fill=Gender)) + 
   geom_boxplot() +
   theme_gray() +
   scale_fill_brewer(palette="Set1") +
   stat_summary(fun = median, geom = "line", aes(group=Gender, color=Race1))
 
-ggplot(NHANES_12, aes(Gender, Poverty, fill=Race1)) + 
+ggplot(NHANES, aes(Gender, Poverty, fill=Race1)) + 
   geom_boxplot() +
   theme_gray() +
   scale_fill_brewer(palette="YlOrBr") +
@@ -53,7 +53,7 @@ ggplot(NHANES_12, aes(Gender, Poverty, fill=Race1)) +
 
 # Quão significante é a disparidade de renda entre os gêneros (2012)? -----
 
-ggplot(NHANES_12, aes(Race1, Poverty, fill=Gender)) + 
+ggplot(NHANES, aes(Race1, Poverty, fill=Gender)) + 
   geom_boxplot() +
   theme_gray() +
   scale_fill_brewer(palette="YlOrBr") +
@@ -61,7 +61,7 @@ ggplot(NHANES_12, aes(Race1, Poverty, fill=Gender)) +
 
 '| À primeira análise, essa disparidade praticamente apenas existe entre pessoas brancas.'
 
-ggplot(NHANES_12, aes(Gender, Poverty, fill=MaritalStatus)) + 
+ggplot(NHANES, aes(Gender, Poverty, fill=MaritalStatus)) + 
   geom_boxplot() +
   theme_gray() +
   scale_fill_brewer(palette="YlOrBr") +
@@ -71,7 +71,7 @@ ggplot(NHANES_12, aes(Gender, Poverty, fill=MaritalStatus)) +
 '| Dentre as pessoas solteiras, as mulheres costumam receber menos que os homens.'
 '| Vamos analisar se a diferença é estatisticamente significativa.'
 
-ggplot(NHANES_12, aes(sample=Poverty))+
+ggplot(NHANES, aes(sample=Poverty))+
   geom_qq() +
   geom_qq_line() + 
   facet_grid(~Gender)
@@ -81,16 +81,16 @@ ggplot(NHANES_12, aes(sample=Poverty))+
 if(!require(RVAideMemoire)) install.packages("RVAideMemoire")
 library(RVAideMemoire)
 
-byf.shapiro(Poverty ~ Gender, NHANES_12)
-leveneTest(Poverty ~ Gender, NHANES_12)#, center=mean)
+byf.shapiro(Poverty ~ Gender, NHANES)
+leveneTest(Poverty ~ Gender, NHANES)#, center=mean)
 
-t.test(Poverty ~ Gender, NHANES_12, var.equal=TRUE)
+t.test(Poverty ~ Gender, NHANES, var.equal=TRUE)
 
 '| O p-valor menor que 0.05 indica que, ao nível de 95% de certeza, existe variação significativa entre a renda de homens e mulheres.'
 '| Mas esse dado, embora muito relevante, foge um pouco do escopo do trabalho.'
 '| ENTRETANTO...'
 
-ggplot(NHANES_12, aes(HealthGen, Poverty, fill=Gender)) + 
+ggplot(NHANES, aes(HealthGen, Poverty, fill=Gender)) + 
   geom_boxplot() +
   theme_gray() +
   scale_fill_brewer(palette="YlOrBr") +
@@ -101,26 +101,26 @@ ggplot(NHANES_12, aes(HealthGen, Poverty, fill=Gender)) +
 '| II. A saúde muda conforme o gênero?'
 '| III. EXISTE INTERAÇÃO entre a renda e o gênero?'
 
-NHANES_12$HHIncomeMid_log <- log(NHANES_12$HHIncomeMid + 1)
+NHANES$HHIncomeMid_log <- log(NHANES$HHIncomeMid + 1)
 
 library(dplyr)
-NHANES_12 %>%
+NHANES %>%
   group_by(Gender, HealthGen) %>%
   summarise(media = mean(HHIncomeMid_log), .groups = "drop")
 
-ggplot(NHANES_12, aes(HealthGen, HHIncomeMid_log, fill=Gender)) + 
+ggplot(NHANES, aes(HealthGen, HHIncomeMid_log, fill=Gender)) + 
   geom_boxplot() +
   theme_gray() +
   scale_fill_brewer(palette="YlOrBr") +
   stat_summary(fun = median, geom = "line", aes(group=Gender, color=Gender))
 
-modelo2 <- lm(HHIncomeMid_log ~ HealthGen * Gender, data = NHANES_12)
+modelo2 <- lm(HHIncomeMid_log ~ HealthGen * Gender, data = NHANES)
 res2 <- residuals(modelo2)
 
 hist(res2) # -> Dados não normais
 
 library(car)
-leveneTest(HHIncomeMid_log ~ HealthGen * Gender, data = NHANES_12) # -> Impossibilidade de usar a ANOVA regular
+leveneTest(HHIncomeMid_log ~ HealthGen * Gender, data = NHANES) # -> Impossibilidade de usar a ANOVA regular
 
 # Não há como fazer uma ANOVA de Welsh ou teste de Kruskal-Wallis em duas vias.
 
@@ -130,11 +130,10 @@ leveneTest(HHIncomeMid_log ~ HealthGen * Gender, data = NHANES_12) # -> Impossib
 # Poverty: "INDFMMPI"
 # HealthGen: "HUQ010"
 # Gender: "RIAGENDR"
-# Age: "RIDAGEYR"
 # Ethnicity: "RIDRETH1"
 
 library(dplyr)
-NHANES_23_t = NHANES_23 %>%
+NHANES_20_t1 = NHANES_20 %>%
   mutate(HUQ010_txt = case_when(
     HUQ010 == "1" ~ "Excellent",
     HUQ010 == "2" ~ "Vgood",
@@ -144,23 +143,23 @@ NHANES_23_t = NHANES_23 %>%
     TRUE ~ NA
   ))
 
-NHANES_23_t = NHANES_23_t %>%
-  mutate(RIDAGEYR_txt = case_when(
-    RIDAGEYR == "1" ~ "<20",
-    RIDAGEYR == "2" ~ "20-39",
-    RIDAGEYR == "3" ~ "40-59",
-    RIDAGEYR == "4" ~ ">=60", 
+NHANES_20_t1 = NHANES_20_t1 %>%
+  mutate(DMDHRAGZ_txt = case_when(
+    DMDHRAGZ == "1" ~ "<20",
+    DMDHRAGZ == "2" ~ "20-39",
+    DMDHRAGZ == "3" ~ "40-59",
+    DMDHRAGZ == "4" ~ ">=60", 
     TRUE ~ NA
   ))
 
-NHANES_23_t = NHANES_23_t %>%
+NHANES_20_t1 = NHANES_20_t1 %>%
   mutate(RIAGENDR_txt = case_when(
     RIAGENDR == "1" ~ "Male",
     RIAGENDR == "2" ~ "Female",
     TRUE ~ NA
   ))
 
-NHANES_23_t = NHANES_23_t %>%
+NHANES_20_t1 = NHANES_20_t1 %>%
   mutate(RIDRETH1_txt = case_when(
     RIDRETH1 == "1" ~ "Mexican",
     RIDRETH1 == "2" ~ "Other Hispanic",
@@ -170,7 +169,7 @@ NHANES_23_t = NHANES_23_t %>%
     TRUE ~ NA
   ))
 
-NHANES_23_t = NHANES_23_t %>%
+NHANES_20_t1 = NHANES_20_t1 %>%
   mutate(DMDMARTZ_txt = case_when(
     DMDMARTZ == "1" ~ "Married/Living with partner",
     DMDMARTZ == "2" ~ "Widowed/Divorced/Separated",
@@ -181,7 +180,7 @@ NHANES_23_t = NHANES_23_t %>%
 # Quais idades possuem maior índice de pobreza (2020)? -----
 
 library(ggplot2)
-ggplot(NHANES_23_t, aes(reorder(RIDAGEYR_txt, RIDAGEYR), INDFMMPI, fill=HUQ010_txt)) + 
+ggplot(NHANES_20_t1, aes(reorder(DMDHRAGZ_txt, DMDHRAGZ), INDFMMPI, fill=HUQ010_txt)) + 
   geom_boxplot() +
   theme_gray() +
   scale_fill_brewer(palette="Spectral") +
@@ -191,24 +190,17 @@ ggplot(NHANES_23_t, aes(reorder(RIDAGEYR_txt, RIDAGEYR), INDFMMPI, fill=HUQ010_t
 '| Também percebem-se ausências em algumas categorias, o que pode indicar ausências de integrantes nestas categorias.'
 
 par(mfrow=c(2,1))
-hist(NHANES_12$Age)
-hist(NHANES_23$RIDAGEYR)
+hist(NHANES$Age)
+hist(NHANES_20$DMDHRAGZ)
 
-'| Há integrantes de todas as idades, porém distribuídos de forma distinta.'
-
-ggplot(NHANES_23_t, aes(reorder(HUQ010_txt, HUQ010), RIDAGEYR, fill=HUQ010_txt)) + 
-  geom_boxplot() +
-  theme_gray() +
-  scale_fill_brewer(palette="Spectral") +
-  stat_summary(fun = median, geom = "line", aes(group=HUQ010_txt, color=HUQ010_txt))
-
-'| Diferentemente de 2012, em que existem integrantes de todas as idades, a maioria das pessoas com saúde muito ruim têm maior idade.'
+'| Há uma NÍTIDA ausência de indivíduos nas idades extremas da pesquisa de 2020.'
+'| Uma comparação pode ser enviezada.'
 
 # Quais gêneros possuem maior índice de pobreza (2020)? -----
 
-NHANES_23_t = subset(NHANES_23_t, INDFMMPI<=5 & HUQ010<=5)
+NHANES_20_t1 = subset(NHANES_20_t1, INDFMMPI<=5 & HUQ010<=5)
 
-ggplot(NHANES_23_t, aes(HUQ010_txt, INDFMMPI, fill=RIAGENDR_txt)) + 
+ggplot(NHANES_20_t1, aes(HUQ010_txt, INDFMMPI, fill=RIAGENDR_txt)) + 
   geom_boxplot() +
   theme_gray() +
   scale_fill_brewer(palette="Set1") +
@@ -216,21 +208,21 @@ ggplot(NHANES_23_t, aes(HUQ010_txt, INDFMMPI, fill=RIAGENDR_txt)) +
 
 # Quais etnias possuem maior índice de pobreza (2020)? -----
 
-ggplot(NHANES_23_t, aes(HUQ010_txt, INDFMMPI, fill=RIDRETH1_txt)) + 
+ggplot(NHANES_20_t1, aes(HUQ010_txt, INDFMMPI, fill=RIDRETH1_txt)) + 
   geom_boxplot() +
   theme_gray() +
-  scale_fill_brewer(palette="YlOrBr") +
+  scale_fill_brewer(palette="Spectral") +
   stat_summary(fun = median, geom = "line", aes(group=RIDRETH1_txt, color=RIDRETH1_txt))
 
 '| Podemos analisar com maior profundidade a relação etnia-pobreza e etnia-saúde.'
 
-ggplot(NHANES_23_t, aes(RIAGENDR_txt, INDFMMPI, fill=RIAGENDR_txt)) + 
+ggplot(NHANES_20_t1, aes(RIAGENDR_txt, INDFMMPI, fill=RIAGENDR_txt)) + 
   geom_boxplot() +
   theme_gray() +
   scale_fill_brewer(palette="Set1") +
   stat_summary(fun = median, geom = "line", aes(group=RIAGENDR_txt, color=RIDRETH1_txt))
 
-ggplot(NHANES_23_t, aes(RIAGENDR_txt, INDFMMPI, fill=RIDRETH1_txt)) + 
+ggplot(NHANES_20_t1, aes(RIAGENDR_txt, INDFMMPI, fill=RIDRETH1_txt)) + 
   geom_boxplot() +
   theme_gray() +
   scale_fill_brewer(palette="YlOrBr") +
@@ -241,7 +233,7 @@ ggplot(NHANES_23_t, aes(RIAGENDR_txt, INDFMMPI, fill=RIDRETH1_txt)) +
 
 # Quão significante é a disparidade de renda entre os gêneros (2020)? -----
 
-ggplot(NHANES_23_t, aes(RIDRETH1_txt, INDFMMPI, fill=RIAGENDR_txt)) + 
+ggplot(NHANES_20_t1, aes(RIDRETH1_txt, INDFMMPI, fill=RIAGENDR_txt)) + 
   geom_boxplot() +
   theme_gray() +
   scale_fill_brewer(palette="YlOrBr") +
@@ -249,16 +241,17 @@ ggplot(NHANES_23_t, aes(RIDRETH1_txt, INDFMMPI, fill=RIAGENDR_txt)) +
 
 '| Em contraste à 2012, a disparidade agora é nítida entre todos as etnias.'
 
-ggplot(NHANES_23_t, aes(RIAGENDR_txt, INDFMMPI, fill=DMDMARTZ_txt)) + 
+ggplot(NHANES_20_t1, aes(RIAGENDR_txt, INDFMMPI, fill=DMDMARTZ_txt)) + 
   geom_boxplot() +
   theme_gray() +
   scale_fill_brewer(palette="YlOrBr") +
   stat_summary(fun = median, geom = "line", aes(group=RIAGENDR_txt, color=RIDRETH1_txt))
 
-'| Exceto pelos casados, as mulheres costumam receber menos que os homens.'
+'| Há uma disparidade entre os indivíduos casados distintos. Isso pode implicar maior porcentagem de relações homoafetivas.'
+'| Em todos os grupos, as mulheres costumam receber menos que os homens.'
 '| Vamos analisar se a diferença é estatisticamente significativa.'
 
-ggplot(NHANES_23_t, aes(sample=INDFMMPI))+
+ggplot(NHANES_20_t1, aes(sample=INDFMMPI))+
   geom_qq() +
   geom_qq_line() + 
   facet_grid(~RIAGENDR_txt)
@@ -268,10 +261,10 @@ ggplot(NHANES_23_t, aes(sample=INDFMMPI))+
 if(!require(RVAideMemoire)) install.packages("RVAideMemoire")
 library(RVAideMemoire)
 
-byf.shapiro(INDFMMPI ~ RIAGENDR_txt, NHANES_23_t)
-leveneTest(INDFMMPI ~ RIAGENDR_txt, NHANES_23_t)#, center=mean)
+byf.shapiro(INDFMMPI ~ RIAGENDR_txt, NHANES_20_t1)
+leveneTest(INDFMMPI ~ RIAGENDR_txt, NHANES_20_t1)#, center=mean)
 
-t.test(INDFMMPI ~ RIAGENDR_txt, NHANES_23_t, var.equal=TRUE)
+t.test(INDFMMPI ~ RIAGENDR_txt, NHANES_20_t1, var.equal=TRUE)
 
 '| O p-valor MUITO menor que 0.05 indica que, ao nível de 95% de certeza, existe variação significativa entre a renda de homens e mulheres.'
 '| Ainda não sei se isso é relevante ao artigo.'

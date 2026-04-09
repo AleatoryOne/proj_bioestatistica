@@ -1,6 +1,0 @@
-"0","modelo1.1 = aov(INDFMMPI ~ as.factor(HUQ010), data=NHANES_20_t1)"
-"0","res1.1 = residuals(modelo1.1)"
-"0",""
-"0","#shapiro.test(res1.1) <- O teste de Shapiro para normalidade dos resíduos não pode ser feito pois n >> 5000."
-"0",""
-"0","hist(res1.1)"
