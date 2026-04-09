@@ -12,25 +12,25 @@
 # Went to Psychiatrist: "HUQ090
 
 # Análise A: Plano de saúde -----
-NHANES_20_t3a = subset(NHANES_20, IND310<=5 & HIQ011 <=5)
+NHANES_20_t4a = subset(NHANES_20, IND310<=5 & HIQ011 <=5)
 
 library(ggplot2)
-ggplot(NHANES_20_t3a, aes(HIQ011, INDFMMPI, group=HIQ011)) + 
+ggplot(NHANES_20_t4a, aes(HIQ011, INDFMMPI, group=HIQ011)) + 
   geom_boxplot() +
   theme_gray()
 
 '| A ampla maioria dos que não têm plano de saúde possuem índice de pobreza entre 1 e 2.'
 
-ggplot(NHANES_20_t3a, aes(HIQ011, IND310, group=HIQ011)) + 
+ggplot(NHANES_20_t4a, aes(HIQ011, IND310, group=HIQ011)) + 
   geom_boxplot() +
   theme_gray()
 
 '| Praticamente TODO o percentil principal (excluindo outliers) que não possui plano de saúde ganha menos de $3000 de patrimônio no momento da pesquisa.'
 
 # Análise B: Visita regularmente instituição médica -----
-NHANES_20_t3b = subset(NHANES_20, IND310<=5 & HUQ030<=5)
+NHANES_20_t4b = subset(NHANES_20, IND310<=5 & HUQ030<=5)
 
-ggplot(NHANES_20_t3b, aes(IND310, fill=as.factor(HUQ030))) + 
+ggplot(NHANES_20_t4b, aes(IND310, fill=as.factor(HUQ030))) + 
   geom_bar(aes(y = after_stat(count / tapply(count, x, sum)[x])),
            position = "dodge") +
   scale_y_continuous(labels = scales::percent) +
@@ -39,10 +39,10 @@ ggplot(NHANES_20_t3b, aes(IND310, fill=as.factor(HUQ030))) +
 
 
 # Análise C: Qual instituição médica visita mais -----
-NHANES_20_t3c = subset(NHANES_20, IND310<=5 & HUQ042<=6)
+NHANES_20_t4c = subset(NHANES_20, IND310<=5 & HUQ042<=6)
 
 library(dplyr)
-NHANES_20_t3c = NHANES_20_t3c %>%
+NHANES_20_t4c = NHANES_20_t4c %>%
   mutate(IND310_txt = case_when(
     IND310 == "1" ~ "< 3K",
     IND310 == "2" ~ "3K-5K",
@@ -52,7 +52,7 @@ NHANES_20_t3c = NHANES_20_t3c %>%
     TRUE ~ "Nao sabe/nao respondeu"
   ))
 
-NHANES_20_t3c = NHANES_20_t3c %>%
+NHANES_20_t4c = NHANES_20_t4c %>%
   mutate(HUQ042_txt = case_when(
     HUQ042 == "1" ~ "Hospital/consultorio",
     HUQ042 == "2" ~ "Farmacia",
@@ -63,7 +63,7 @@ NHANES_20_t3c = NHANES_20_t3c %>%
     TRUE ~ "Nao sabe/nao respondeu"
   ))
 
-ggplot(NHANES_20_t3c, aes(reorder(IND310_txt, IND310), fill=HUQ042_txt)) + 
+ggplot(NHANES_20_t4c, aes(reorder(IND310_txt, IND310), fill=HUQ042_txt)) + 
   geom_bar(aes(y = after_stat(count / tapply(count, x, sum)[x])),
            position = "dodge") +
   scale_y_continuous(labels = scales::percent) +
@@ -74,9 +74,9 @@ ggplot(NHANES_20_t3c, aes(reorder(IND310_txt, IND310), fill=HUQ042_txt)) +
 '| O único conjunto em que existe uma porcentagem que afirma NÃO IR a um consultório ou semelhantes é a com menor poder aquisitivo.'
 
 # Análise D: Teve teleconsulta no último ano -----
-NHANES_20_t3d = subset(NHANES_20, IND310<=5 & HUQ055<=5)
+NHANES_20_t4d = subset(NHANES_20, IND310<=5 & HUQ055<=5)
 
-NHANES_20_t3d = NHANES_20_t3d %>%
+NHANES_20_t4d = NHANES_20_t4d %>%
   mutate(IND310_txt = case_when(
     IND310 == "1" ~ "< 3K",
     IND310 == "2" ~ "3K-5K",
@@ -86,14 +86,14 @@ NHANES_20_t3d = NHANES_20_t3d %>%
     TRUE ~ "Nao sabe/nao respondeu"
   ))
 
-NHANES_20_t3d = NHANES_20_t3d %>%
+NHANES_20_t4d = NHANES_20_t4d %>%
   mutate(HUQ055_txt = case_when(
     HUQ055 == "1" ~ "Sim",
     HUQ055 == "2" ~ "Não",
     TRUE ~ "Nao sabe/nao respondeu"
   ))
 
-ggplot(NHANES_20_t3d, aes(reorder(IND310_txt, IND310), fill=HUQ055_txt)) + 
+ggplot(NHANES_20_t4d, aes(reorder(IND310_txt, IND310), fill=HUQ055_txt)) + 
   geom_bar(aes(y = after_stat(count / tapply(count, x, sum)[x])),
            position = "dodge") +
   scale_y_continuous(labels = scales::percent) +
@@ -103,9 +103,9 @@ ggplot(NHANES_20_t3d, aes(reorder(IND310_txt, IND310), fill=HUQ055_txt)) +
 '| Não há um padrão de quem possui mais dinheiro vai mais ao médico.'
 
 # Análise E: Foi ao psiquiatra no último ano -----
-NHANES_20_t3e = subset(NHANES_20, IND310<=5 & HUQ090<=5)
+NHANES_20_t4e = subset(NHANES_20, IND310<=5 & HUQ090<=5)
 
-NHANES_20_t3e = NHANES_20_t3e %>%
+NHANES_20_t4e = NHANES_20_t4e %>%
   mutate(IND310_txt = case_when(
     IND310 == "1" ~ "< 3K",
     IND310 == "2" ~ "3K-5K",
@@ -115,14 +115,14 @@ NHANES_20_t3e = NHANES_20_t3e %>%
     TRUE ~ "Nao sabe/nao respondeu"
   ))
 
-NHANES_20_t3e = NHANES_20_t3e %>%
+NHANES_20_t4e = NHANES_20_t4e %>%
   mutate(HUQ090_txt = case_when(
     HUQ090 == "1" ~ "Sim",
     HUQ090 == "2" ~ "Não",
     TRUE ~ "Nao sabe/nao respondeu"
   ))
 
-ggplot(NHANES_20_t3e, aes(reorder(IND310_txt, IND310), fill=HUQ090_txt)) + 
+ggplot(NHANES_20_t4e, aes(reorder(IND310_txt, IND310), fill=HUQ090_txt)) + 
   geom_bar(aes(y = after_stat(count / tapply(count, x, sum)[x])),
            position = "dodge") +
   scale_y_continuous(labels = scales::percent) +
