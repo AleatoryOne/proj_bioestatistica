@@ -13,12 +13,15 @@ NHANES_23_t = subset(NHANES_23, INDFMMPI<=5 & HUQ010<=5)
 
 # Plotagem e análise preliminar -----
 library(ggplot2)
-ggplot(NHANES_23_t, aes(as.factor(HUQ010), INDFMMPI, fill=as.factor(HUQ010))) + 
+ggplot(NHANES_23_t, aes(reorder(HUQ010_txt, HUQ010), INDFMMPI, fill=reorder(HUQ010_txt, HUQ010))) + 
   geom_boxplot() +
   theme_gray() +
-  scale_fill_brewer(palette="PuOr") +
-  stat_summary(fun = mean, geom = "line", aes(group = 1), color = "darkgreen") +
-  labs(x="Perceived health level (1 = better / 5 = worse)")
+  scale_fill_brewer(palette="PuOr") +  
+  stat_summary(fun = mean, geom = "line", aes(group = 1), color = "green") +
+  stat_summary(fun = median, geom = "line", aes(group = 1), color ="blue") +
+  labs(x="Saúde geral",
+       y='Índice de pobreza',
+       fill='Saúde')
 
 '| O padrão não aparenta ser tão claro como era 8 anos atrás. Ainda há uma leve relação entre riqueza e melhor saúde, mas houve uma melhora: os níveis de saúde estão mais equilibrados.
  | Vamos analisar estatisticamente.'
@@ -49,5 +52,3 @@ oneway.test(INDFMMPI ~ as.factor(HUQ010), data=NHANES_23_t, var.equal = FALSE)
 kruskal.test(INDFMMPI ~ as.factor(HUQ010), data=NHANES_23_t)
 
 '| O p-valor do teste de Kruskal-Wallis, somado ao teste de ANOVA de Welch, indica que, mesmo passados quase dez anos, ainda existe algum nível de diferença significante entre os grupos.'
-
-n

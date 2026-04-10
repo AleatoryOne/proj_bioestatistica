@@ -52,6 +52,12 @@ ggplot(comparison, aes(x = Saude, y = Pobreza, fill = Ano)) +
     geom = "line",
     linetype = "dashed",
     linewidth = 0.8) +
+  stat_summary(
+    aes(color = Ano, group = Ano),
+    fun = mean,
+    geom = "line",
+    linetype = "dotted",
+    linewidth = 0.8) +
   labs(
     x = "Nível de saúde",
     y = "Índice de pobreza",

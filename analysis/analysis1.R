@@ -10,10 +10,11 @@ ggplot(subset(NHANES_12, !is.na(HealthGen)), aes(HealthGen, Poverty, fill=Health
   geom_boxplot() +
   theme_gray() +
   scale_fill_brewer(palette="PuOr") +
-  xlab("Saúde geral") +
-  ylab("Índice de pobreza") +
   stat_summary(fun = mean, geom = "line", aes(group = 1), color = "green") +
-  stat_summary(fun = median, geom = "line", aes(group = 1), color ="blue")
+  stat_summary(fun = median, geom = "line", aes(group = 1), color ="blue") +
+  labs(x="Saúde geral",
+       y='Índice de pobreza',
+       fill='Saúde')
 
 '| Existe um padrão, geralmente pessoas com melhor saúde aparentam ter um menor nível de pobreza.'
 '| Vamos verificar se isto é estatisticamente real.'

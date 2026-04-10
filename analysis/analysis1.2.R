@@ -5,12 +5,19 @@
 
 # Quais idades possuem maior índice de pobreza (2012)? -----
 
+
+
 library(ggplot2)
 ggplot(NHANES_12, aes(AgeDecade, Poverty, fill=HealthGen)) + 
   geom_boxplot() +
   theme_gray() +
   scale_fill_brewer(palette="Spectral") +
-  stat_summary(fun = median, geom = "line", aes(group=HealthGen, color=HealthGen))
+  stat_summary(fun = median, geom = "line", linetype = "dotted",
+               aes(group=HealthGen, color=HealthGen)) +
+  labs(x="Idades",
+       y='Índice de pobreza',
+       fill='Saúde',
+       geom='Saúde')
 
 '| Percebe-se, em primeira análise, quase que imediatamente, que conforme a idade aumenta, apenas os mais ricos possuem saúde Excelente ou Muito Boa, até passarmos dos 70 anos, em que a saúde de todas as classses declina.'
 '| O pior índice de saúde apenas se manifesta entre 10 e 29 anos para as classes >=3.'
@@ -29,7 +36,7 @@ ggplot(NHANES_12, aes(HealthGen, Poverty, fill=Gender)) +
 ggplot(NHANES_12, aes(HealthGen, Poverty, fill=Race1)) + 
   geom_boxplot() +
   theme_gray() +
-  scale_fill_brewer(palette="Spectral") +
+  scale_fill_brewer(palette="YlOrBr") +
   stat_summary(fun = median, geom = "line", aes(group = Race1, color=Race1))
 
 '| Podemos analisar com maior profundidade a relação etnia-pobreza e etnia-saúde.'
