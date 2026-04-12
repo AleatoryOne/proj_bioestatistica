@@ -1,27 +1,27 @@
 {
-    "id": "C0CE1094",
+    "id": "68B747DB",
     "path": "C:/Users/pedri/OneDrive/Área de Trabalho/bioestatistica/proj_bioestatistica/analysis/analysis5.R",
     "project_path": "analysis/analysis5.R",
     "type": "r_source",
-    "hash": "3298859364",
+    "hash": "0",
     "contents": "",
     "dirty": false,
-    "created": 1775848025171.0,
+    "created": 1775944463503.0,
     "source_on_save": false,
-    "relative_order": 6,
+    "relative_order": 1,
     "properties": {
         "tempName": "Untitled1",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "47,10",
-        "scrollLine": "27"
+        "cursorPosition": "0,0",
+        "scrollLine": "0"
     },
     "folds": "",
     "lastKnownWriteTime": 1775851562,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1775851562735,
+    "last_content_update": 1775851562,
     "read_only": false,
     "read_only_alternatives": []
 }

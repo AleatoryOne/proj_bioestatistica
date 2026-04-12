@@ -45,3 +45,14 @@ oneway.test(Poverty ~ HealthGen, data=NHANES_12, var.equal = FALSE)
 kruskal.test(Poverty ~ HealthGen, data=NHANES_12)
 
 '| O p-valor do teste de Kruskal-Wallis, somado ao teste de ANOVA de Welch, indica que a visualização que obtemos faz sentido estatisticamente, isto é, que existe algum nível de diferença significante entre os grupos.'
+
+# Análise por qui-quadrado (correlação renda-saúde) -----
+NHANES_12_q = subset(NHANES_12, !is.na(HealthGen))
+summary(NHANES_12_q$HealthGen)
+
+NHANES_12_table = table(NHANES_12_q$HealthGen, NHANES_12_q$HHIncome)
+qui2 = chisq.test(NHANES_12_table, correct = TRUE)
+
+qui2$stdres
+
+'A partir do teste de qui quadrado, temos que há uma correlação, de forma que pessoas com menor poder aquisitivo, têm FORTE tendência a ter uma saúde mediana ou ruim. De igual forma, podemos explicitar que pessoas com boa condição de vida, em especial com renda superior a 75000 dólares, possuem FORTE tendência a terem saúde muito boa ou excelente.'

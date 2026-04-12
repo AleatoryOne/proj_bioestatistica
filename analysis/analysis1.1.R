@@ -52,3 +52,32 @@ oneway.test(INDFMMPI ~ as.factor(HUQ010), data=NHANES_23_t, var.equal = FALSE)
 kruskal.test(INDFMMPI ~ as.factor(HUQ010), data=NHANES_23_t)
 
 '| O p-valor do teste de Kruskal-Wallis, somado ao teste de ANOVA de Welch, indica que, mesmo passados quase dez anos, ainda existe algum nível de diferença significante entre os grupos.'
+
+# Análise por qui-quadrado (correlação renda-saúde) -----
+NHANES_23_q = subset(NHANES_23, IND310<=5 & HUQ010<= 5)
+
+library(dplyr)
+NHANES_23_q = NHANES_23_q %>%
+  mutate(HUQ010_txt = case_when(
+    HUQ010 == "1" ~ "Excellent",
+    HUQ010 == "2" ~ "Vgood",
+    HUQ010 == "3" ~ "Good",
+    HUQ010 == "4" ~ "Fair", 
+    HUQ010 == "5" ~ "Poor",
+    TRUE ~ NA
+  ))
+NHANES_23_q$HUQ010_txt = as.factor(NHANES_23_q$HUQ010_txt)
+NHANES_23_q$HUQ010_txt <- factor(NHANES_23_q$HUQ010_txt,
+                                 levels = c("Excellent",
+                                         "Vgood",
+                                         "Good",
+                                         "Fair",
+                                         "Poor"))
+
+NHANES_23_table = table(NHANES_23_,q$IND310, NHANES_23_q$HUQ010_txt)
+qui2 = chisq.test(NHANES_23_table, correct = TRUE)
+
+qui2
+qui2$stdres
+
+'A partir do teste de qui quadrado, temos que, a despeito da queda generalizada no nível de saúde \"excelente\", temos uma correlação entre o poder aquisitivo e o nível de saúde, tal que indivíduos com menor poder aquisitivo, têm tendência a ter uma saúde mediana ou ruim. De semelhante forma, pessoas com maior poder aquisitivo têm tendência a ter uma saúde muito boa, e uma tendência levemente menor (mas ainda relevante, z = 2.38), a ter uma saúde excelente.'

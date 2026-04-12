@@ -1,0 +1,20 @@
+# ________________________________________
+# ANÁLISE TESTE 5
+# Saúde x Categoria de Renda Mensal p/ x²
+# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+library(ggplot2)
+ggplot(subset(NHANES_12, !is.na(HealthGen)), aes(HealthGen, HHIncomeMid, fill=HealthGen)) + 
+  geom_boxplot() +
+  theme_gray() +
+  scale_fill_brewer(palette="PuOr") +
+  stat_summary(fun = mean, geom = "line", aes(group = 1), color = "green") +
+  stat_summary(fun = median, geom = "line", aes(group = 1), color ="blue") +
+  labs(x="Saúde geral",
+       y='Índice de pobreza',
+       fill='Saúde')
+
+NHANES_12_q = subset(NHANES_12, !is.na(HealthGen))
+summary(NHANES_12_q$HealthGen)
+
+table(NHANES_12_q$HealthGen, NHANES_12_q$HHIncome)
