@@ -80,16 +80,3 @@ leveneTest(Poverty ~ Depressed, data = NHANES_12_t) #Depressão
 leveneTest(Poverty ~ LittleInterest, data = NHANES_12_t) #Ausência de interesse
 
 '| O teste de Levene para homogeneidade das variâncias muito inferior que p = 0.05 mostra distribuição não homogênea.'
-'| Utilizamos testes alternativos para verificar a variância.'
-
-## Depressão
-oneway.test(Poverty ~ Depressed, data=NHANES_12_t, var.equal = FALSE)
-kruskal.test(Poverty ~ Depressed, data=NHANES_12_t)
-
-'| O p-valor do teste de Kruskal-Wallis, somado ao teste de ANOVA de Welch, indica que a visualização que obtemos faz sentido estatisticamente, isto é, que existe algum nível de diferença significante entre os grupos.'
-
-## Ausência de interesse
-oneway.test(Poverty ~ LittleInterest, data=NHANES_12_t, var.equal = FALSE)
-kruskal.test(Poverty ~ LittleInterest, data=NHANES_12_t)
-
-'| De igual forma, o p-valor muito inferior ao nível de significância implica na existência de diferença significante ente os grupos.'

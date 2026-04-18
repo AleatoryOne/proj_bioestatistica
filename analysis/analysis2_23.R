@@ -76,13 +76,3 @@ leveneTest(INDFMMPI ~ as.factor(DPQ010), data=NHANES_23_t) #Ausência de interes
 leveneTest(INDFMMPI ~ as.factor(DPQ020), data=NHANES_23_t) #Depressão
 
 '| O teste de Levene para homogeneidade das variâncias mostra que nenhuma das distribuições apresentam variâncias homogêneas.'
-
-## Depressão
-oneway.test(INDFMMPI ~ as.factor(DPQ020), data=NHANES_23_t, var.equal = FALSE)
-kruskal.test(INDFMMPI ~ as.factor(DPQ020), data=NHANES_23_t)
-
-## Ausência de interesse
-oneway.test(INDFMMPI ~ as.factor(DPQ010), data=NHANES_23_t, var.equal = FALSE)
-kruskal.test(INDFMMPI ~ as.factor(DPQ010), data=NHANES_23_t)
-
-'| Os testes de Kruskal-Wallis e de Welch indicam diferença significativa entre os grupos.'

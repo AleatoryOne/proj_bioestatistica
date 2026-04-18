@@ -46,12 +46,6 @@ leveneTest(Poverty ~ HealthGen, data = NHANES_12_t)
 oneway.test(Poverty ~ HealthGen, data=NHANES_12_t, var.equal = FALSE)
 kruskal.test(Poverty ~ HealthGen, data=NHANES_12_t)
 
-'| O p-valor do teste de Kruskal-Wallis, somado ao teste de ANOVA de Welch, indica que a visualização que obtemos faz sentido estatisticamente, isto é, que existe algum nível de diferença significante entre os grupos.'
-
-# Teste post-Hoc -----
-library(FSA)
-dunnTest(Poverty ~ HealthGen, data = NHANES_12_t, method = "bonferroni")
-
 # Análise por qui-quadrado (correlação renda-saúde) -----
 summary(NHANES_12_t$HealthGen)
 

@@ -43,11 +43,6 @@ leveneTest(INDFMMPI ~ as.factor(HUQ010), data=NHANES_23_t)
 
 '| Novamente, o teste de Levene para homogeneidade das variâncias mostra distribuição não homogênea.'
 
-oneway.test(INDFMMPI ~ as.factor(HUQ010), data=NHANES_23_t, var.equal = FALSE)
-kruskal.test(INDFMMPI ~ as.factor(HUQ010), data=NHANES_23_t)
-
-'| O p-valor do teste de Kruskal-Wallis, somado ao teste de ANOVA de Welch, indica que, mesmo passados quase dez anos, ainda existe algum nível de diferença significante entre os grupos.'
-
 # Análise por qui-quadrado (correlação renda-saúde) -----
 NHANES_23_t$HUQ010_txt = as.factor(NHANES_23_t$HUQ010_txt)
 NHANES_23_t$HUQ010_txt <- factor(NHANES_23_t$HUQ010_txt,
