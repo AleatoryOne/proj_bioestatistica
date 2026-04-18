@@ -9,4 +9,7 @@ Trabalho da disciplina de Bioestatística, da *Universidade Federal do ABC*, sob
 * Pedro R. S. Silva
 
 ## ℹ️ Objetivos
-Neste projeto, estão sendo feitas análises do banco de dados da National Health and Nutrition Examination Survey (NHANES), dos Estados Unidos, para investigar relações entre variáveis de saúde e fatores de risco em larga escala, e possivelmente estudar correlações com a realidade brasileira.
+Neste projeto, estão sendo feitas análises do banco de dados da National Health and Nutrition Examination Survey (NHANES), dos Estados Unidos, para investigar relações entre variáveis de saúde e fatores de risco em larga escala, e comparar a evolução destas influências ao decorrer dos anos.
+
+## 📑 Link do artigo (WIP)
+https://pt.overleaf.com/read/ywfsdqbddcxr#f30143
