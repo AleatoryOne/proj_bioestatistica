@@ -1,0 +1,94 @@
+# ________________________________________
+# ANÁLISE INICIAL
+# Análises iniciais (2009-12)
+# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+# Gráfico de saúde ----- 
+
+library(ggplot2)
+ggplot(NHANES_12_t, aes(HealthGen, fill=HealthGen)) + 
+  geom_bar(color='black') +
+  theme_bw() +
+  scale_fill_brewer(palette="PuOr") +
+  labs(title = "Gráfico de indivíduos com determinado nível de saúde",
+       subtitle = "(2009-2012)",
+       x = "Saúde geral",
+       y = 'Número de indivíduos') +
+  theme(legend.position = "none")
+
+library(summarytools)
+ctable(NHANES_12_t$HealthGen, NHANES_12_t$HealthGen,
+       prop = "r", headings=FALSE)
+
+ctable(NHANES_12_t$HealthGen, NHANES_12_t$PovertyGroup,
+       prop = 'c', useNA = 'no', headings=FALSE)
+
+# Gráficos de saúde mental ----- 
+
+ggplot(NHANES_12_t, aes(Depressed, fill=Depressed)) + 
+  geom_bar(color='black') +
+  theme_bw() +
+  scale_fill_brewer(palette="YlGnBu") +
+  labs(title = "Gráfico de indivíduos com indícios de depressão",
+       subtitle = "(2009-2012)",
+       x = 'Proporção de dias que o indivíduo teve sintomas de depressão',
+       y = 'Número de indivíduos') +
+  theme(legend.position = "none")
+
+ctable(NHANES_12_t$Depressed, NHANES_12_t$Depressed,
+       prop = "r", headings=FALSE)
+
+ctable(NHANES_12_t$Depressed, NHANES_12_t$PovertyGroup,
+       prop = 'c', useNA = 'no', headings=FALSE)
+
+ggplot(NHANES_12_t, aes(LittleInterest, fill=LittleInterest)) + 
+  geom_bar(color='black') +
+  theme_bw() +
+  scale_fill_brewer(palette="YlGnBu") +
+  labs(title = "Gráfico de indivíduos com perda de interesse",
+       subtitle = "(2009-2012)",
+       x = 'Proporção de dias que o indivíduo teve perda de interesse',
+       y = 'Número de indivíduos') +
+  theme(legend.position = "none")
+
+ctable(NHANES_12_t$LittleInterest, NHANES_12_t$LittleInterest,
+       prop = "r", headings=FALSE)
+
+ctable(NHANES_12_t$LittleInterest, NHANES_12_t$PovertyGroup,
+       prop = 'c', useNA = 'no', headings=FALSE)
+
+# Média e mediana populacional de pobreza -----
+
+ggplot(NHANES_12_t, aes(y=Poverty)) + 
+  geom_boxplot(fill='lightblue') +
+  theme_bw() +
+  scale_fill_brewer(palette="PuOr") +
+  geom_hline(yintercept = mean(NHANES_12_t$Poverty), color = "green", linetype = "dashed") +
+  labs(title = "Boxplot de índice de pobreza",
+       subtitle = "(2009-2012)",
+       y = "Índice de pobreza") +
+  theme(legend.position = "none") +
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+
+summary(NHANES_12_t$Poverty)
+
+mediana_am_12 = median(NHANES_12_t$Poverty)
+media_am_12 = mean(NHANES_12_t$Poverty)
+desv_pad_12 = sd(NHANES_12_t$Poverty)
+n_12 = length(NHANES_12_t$Poverty)
+erro_pad_12 = desv_pad_12/sqrt(n_12)
+
+c("Mediana:" = mediana_am_12,
+  "Média:" = media_am_12,
+  "Desvio padrão:" = desv_pad_12,
+  "Erro padrão:" = erro_pad_12,
+  "Amostras:" = n_12)
+
+alpha <- 0.05
+z <- qnorm(1 - alpha/2)
+
+IC_inferior_12 = media_am_12 - z * erro_pad_12
+IC_superior_12 = media_am_12 + z * erro_pad_12
+
+cat("Intervalo de confiança: [", IC_inferior_12, ",", IC_superior_12, "]")

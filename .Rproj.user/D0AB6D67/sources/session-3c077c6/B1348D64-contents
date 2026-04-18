@@ -1,0 +1,94 @@
+# ________________________________________
+# ANÁLISE TESTE 3
+# Saúde Mental x Índice de Pobreza (2012)
+# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+# Plotagem e análise preliminar -----
+library(ggplot2)
+library(summarytools)
+ggplot(NHANES_12_t, aes(Depressed, Poverty, fill=Depressed)) + 
+  geom_boxplot() +
+  theme_bw() +
+  scale_fill_brewer(palette="YlGnBu") +
+  stat_summary(fun = mean, geom = "line", aes(group = 1), color = "red") +
+  stat_summary(fun = median, geom = "line", aes(group = 1), color = "magenta") +
+  labs(title = "Boxplot de transtorno depressivo x índice de pobreza", 
+       subtitle = "(2009-2012)",
+       x = "Dias em que os participantes afirmaram estar deprimidos",
+       y = 'Índice de pobreza') +
+  theme(legend.position = "none")
+
+ggplot(NHANES_12_t, aes(LittleInterest, Poverty, fill=LittleInterest)) + 
+  geom_boxplot() +
+  theme_bw() +
+  scale_fill_brewer(palette="YlGnBu") +
+  stat_summary(fun = mean, geom = "line", aes(group = 1), color = "red") +
+  stat_summary(fun = median, geom = "line", aes(group = 1), color = "magenta") +
+  labs(title = "Boxplot de perda de interesse x índice de pobreza",
+       subtitle = "(2009-2012)",
+       x = "Dias em que os participantes afirmaram estar sem interesse",
+       y = 'Índice de pobreza') +
+  theme(legend.position = "none")
+
+'| Nota-se um padrão, geralmente pessoas com menor poder econômico têm maior tendência a ter depressão e perda de interesse.'
+'| Podemos analisar para saber se isso é estatísticamente real.'
+
+# Análise por qui-quadrado (correlação renda-saúde) -----
+summary(NHANES_12_t$Depressed)
+
+NHANES_12_table = table(NHANES_12_t$Depressed, NHANES_12_t$PovertyGroup)
+qui2 = chisq.test(NHANES_12_table, correct = TRUE)
+
+qui2
+qui2$stdres
+
+NHANES_12_table2 = table(NHANES_12_t$LittleInterest, NHANES_12_t$PovertyGroup)
+qui3 = chisq.test(NHANES_12_table2, correct = TRUE)
+
+qui3
+qui3$stdres
+
+'A partir do teste de qui quadrado, temos que há uma correlação, de forma que pessoas com menor poder aquisitivo, têm FORTE tendência a ter uma saúde mediana ou ruim. De igual forma, podemos explicitar que pessoas com boa condição de vida, em especial com renda superior a 75000 dólares, possuem FORTE tendência a terem saúde muito boa ou excelente.'
+
+# Análise de variâncias -----
+ggplot(NHANES_12_t, aes(sample=Poverty))+
+  geom_qq() +
+  geom_qq_line() +
+  facet_grid(~Depressed)
+
+ggplot(NHANES_12_t, aes(sample=Poverty))+
+  geom_qq() +
+  geom_qq_line() +
+  facet_grid(~LittleInterest)
+
+modelo3a = aov(Poverty ~ Depressed, data=NHANES_12_t)
+res3a = residuals(modelo2a)
+
+modelo3b = aov(Poverty ~ LittleInterest, data=NHANES_12)
+res3b = residuals(modelo2b)
+
+par(mfrow=c(1,2))
+hist(res2a) #Depressão
+hist(res2b) #Ausência de interesse
+
+'| Nenhuma das distribuições é normal.'
+'| Nota-se também que elas são bastante parecidas. Isso pode implicar uma relação intricada entre depressão e perda de interesse.'
+
+library(car)
+leveneTest(Poverty ~ Depressed, data = NHANES_12_t) #Depressão
+leveneTest(Poverty ~ LittleInterest, data = NHANES_12_t) #Ausência de interesse
+
+'| O teste de Levene para homogeneidade das variâncias muito inferior que p = 0.05 mostra distribuição não homogênea.'
+'| Utilizamos testes alternativos para verificar a variância.'
+
+## Depressão
+oneway.test(Poverty ~ Depressed, data=NHANES_12_t, var.equal = FALSE)
+kruskal.test(Poverty ~ Depressed, data=NHANES_12_t)
+
+'| O p-valor do teste de Kruskal-Wallis, somado ao teste de ANOVA de Welch, indica que a visualização que obtemos faz sentido estatisticamente, isto é, que existe algum nível de diferença significante entre os grupos.'
+
+## Ausência de interesse
+oneway.test(Poverty ~ LittleInterest, data=NHANES_12_t, var.equal = FALSE)
+kruskal.test(Poverty ~ LittleInterest, data=NHANES_12_t)
+
+'| De igual forma, o p-valor muito inferior ao nível de significância implica na existência de diferença significante ente os grupos.'

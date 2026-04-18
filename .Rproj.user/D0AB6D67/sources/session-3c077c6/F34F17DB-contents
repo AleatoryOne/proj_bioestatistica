@@ -1,0 +1,88 @@
+# ________________________________________
+# ANÁLISE TESTE 1.1
+# Saúde Mental x Índice de Pobreza (2020)
+# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+# Plotagem e análise preliminar -----
+
+library(ggplot2)
+ggplot(NHANES_23_t, aes(reorder(DPQ020_txt, DPQ020), INDFMMPI, fill=reorder(DPQ020_txt, DPQ020))) + 
+  geom_boxplot() +
+  theme_bw() +
+  scale_fill_brewer(palette="YlGnBu") +
+  stat_summary(fun = mean, geom = "line", aes(group = 1), color = "red") +
+  stat_summary(fun = median, geom = "line", aes(group = 1), color = "magenta") +
+  labs(title = "Boxplot de indícios de depressão x índice de pobreza", 
+       subtitle = "(2021-2023)",
+       x = "Proporção de dias com sintomas de depressão",
+       y = 'Índice de pobreza') +
+  theme(legend.position = "none")
+
+'| A priori, percebe-se a presença de um *quarto* nível de avaliação na escala.'
+'| Não obstante, o padrão se preserva, isto é, pessoas mais pobres aparentam apresentar maior nível de depressão.'
+'| Vamos analisar a ausência de interesse também.'
+
+ggplot(NHANES_23_t, aes(reorder(DPQ010_txt, DPQ010), INDFMMPI, fill=reorder(DPQ010_txt, DPQ010))) + 
+  geom_boxplot() +
+  theme_bw() +
+  scale_fill_brewer(palette="YlGnBu") +
+  stat_summary(fun = mean, geom = "line", aes(group = 1), color = "red") +
+  stat_summary(fun = median, geom = "line", aes(group = 1), color = "magenta") +
+  labs(title = "Boxplot de perda de interesse x índice de pobreza",
+       subtitle = "(2021-2023)",
+       x = "Proporção de dias com perda de interesse",
+       y = 'Índice de pobreza') +
+  theme(legend.position = "none")
+
+# Análise por qui-quadrado (correlação renda-saúde) -----
+
+summary(NHANES_23_t$DPQ020_txt)
+
+NHANES_23_table_a = table(NHANES_23_t$DPQ020_txt, NHANES_23_t$INDFMMPI_txt)
+qui2_a = chisq.test(NHANES_23_table_a, correct = TRUE)
+
+qui2_a
+qui2_a$stdres
+
+summary(NHANES_12_t$LittleInterest)
+
+NHANES_23_table_b = table(NHANES_23_t$DPQ010_txt, NHANES_23_t$INDFMMPI_txt)
+qui2_b = chisq.test(NHANES_23_table_b, correct = TRUE)
+
+qui2_b
+qui2_b$stdres
+
+# Análise de variâncias -----
+
+ggplot(NHANES_23_t, aes(sample=INDFMMPI)) +
+  geom_qq() +
+  geom_qq_line() + 
+  facet_grid(~as.factor(DPQ020))
+
+modelo3a.1 = aov(INDFMMPI ~ as.factor(DPQ020), data=NHANES_23_t)
+res3a.1 = residuals(modelo3a.1)
+
+modelo3b.1 = aov(INDFMMPI ~ as.factor(DPQ010), data=NHANES_23_t)
+res3b.1 = residuals(modelo3b.1)
+
+hist(res3a.1)
+hist(res3b.1)
+
+'| O histograma dos resíduos dos casos mostram distribuições bem distintas da normal.'
+'| Note que, desta vez, as distribuições, embora ainda sejam parecidas, não são idênticas.'
+
+library(car)
+leveneTest(INDFMMPI ~ as.factor(DPQ010), data=NHANES_23_t) #Ausência de interesse
+leveneTest(INDFMMPI ~ as.factor(DPQ020), data=NHANES_23_t) #Depressão
+
+'| O teste de Levene para homogeneidade das variâncias mostra que nenhuma das distribuições apresentam variâncias homogêneas.'
+
+## Depressão
+oneway.test(INDFMMPI ~ as.factor(DPQ020), data=NHANES_23_t, var.equal = FALSE)
+kruskal.test(INDFMMPI ~ as.factor(DPQ020), data=NHANES_23_t)
+
+## Ausência de interesse
+oneway.test(INDFMMPI ~ as.factor(DPQ010), data=NHANES_23_t, var.equal = FALSE)
+kruskal.test(INDFMMPI ~ as.factor(DPQ010), data=NHANES_23_t)
+
+'| Os testes de Kruskal-Wallis e de Welch indicam diferença significativa entre os grupos.'
